@@ -3,21 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>All Entries</title>
 </head>
 <body>
-<% entries.forEach(entry => { %>
-  <article>
-    <h2><%= entry.title %></h2>
-    <p><%= entry.entryBody %></p>
-    <small>By <%= entry.owner ? entry.owner.username : 'Unknown' %></small>
+    <%- include('../partials/navbar') %>
 
-    <% if (user && entry.owner && entry.owner._id.toString() === user._id.toString()) { %>
-      <a href="/entries/<%= entry._id %>/edit">Edit</a>
-      <button>Delete</button>
-    <% } %>
-  </article>
-<% }) %>
+    <h1>All Entries</h1>
+
+    <% entries.forEach(entry => { %>
+        <article>
+            <h2><%= entry.title %></h2>
+            <p><%= entry.entryBody %></p>
+            <small>By <%= entry.owner ? entry.owner.username : 'Unknown' %></small>
+
+            <!-- Part 8: Edit and Delete only for the owner -->
+            <% if (user && entry.owner && entry.owner._id.toString() === user._id.toString()) { %>
+                <a href="/entries/<%= entry._id %>/edit">Edit</a>
+
+                <form action="/entries/<%= entry._id %>?_method=DELETE" method="POST" style="display:inline">
+                    <button type="submit">Delete</button>
+                </form>
+            <% } %>
+        </article>
+    <% }) %>
 </body>
-
 </html>
