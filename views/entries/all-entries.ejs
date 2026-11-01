@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<% entries.forEach(entry => { %>
+  <article>
+    <h2><%= entry.title %></h2>
+    <p><%= entry.entryBody %></p>
+    <small>By <%= entry.owner ? entry.owner.username : 'Unknown' %></small>
+
+    <% if (user && entry.owner && entry.owner._id.toString() === user._id.toString()) { %>
+      <a href="/entries/<%= entry._id %>/edit">Edit</a>
+      <button>Delete</button>
+    <% } %>
+  </article>
+<% }) %>
+</body>
+
+</html>
